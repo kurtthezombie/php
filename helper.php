@@ -8,8 +8,8 @@
     
     function main(){
         $conn = connect();
-        echo "id: ".$_POST['id'];
-        $id = isset($_POST['name']) ? $_POST['name'] : '';
+        echo "id:".$_POST['id']." ";
+        $id = isset($_POST['id']) ? $_POST['id'] : '';
         $name = isset($_POST['name']) ? $_POST['name'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
         $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
@@ -26,8 +26,8 @@
         echo $userData['email'];
         echo $userData['phone'];
         echo $userData['bgroup'];
+        echo " ";
         $flag = isset($_POST['flag']) ? intval($_POST['flag']) : 0;
-        var_dump($flag);
 
         saveRecord($userData,$flag);
         mysqli_close($conn);
@@ -86,12 +86,9 @@
     }
     
     function saveRecord($userData, $flag) {
-        var_dump($flag);
         if($flag == 1){
-            echo "Updating Record...";
             updateRecord($userData);
         } else{
-            echo "Deleting Record...";
             addRecord($userData);
         }     
     }
