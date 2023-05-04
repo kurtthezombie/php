@@ -6,32 +6,10 @@
         main();
     }
     
-    /*if(isset($_POST['save-btn'])) {
-        $conn = connect();
-        $last_id = mysqli_insert_id($conn);
-
-        $name = $_POST['name'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $bgroup = $_POST['bgroup'];
-        $userData = array(
-            'id' => isset($_POST['id']) ? $_POST['id'] : '',
-            'name' => $_POST['name'],
-            'email' => $_POST['email'],
-            'phone' => $_POST['phone'],
-            'bgroup' => $_POST['bgroup']
-        );
-        $flag = isset($_POST['flag']) ? intval($_POST['flag']) : 0;
-        var_dump($flag);
-
-        saveRecord($userData, $flag);
-        mysqli_close($conn);
-        header('Location: index.php');
-    }*/
     function main(){
         $conn = connect();
         echo "id: ".$_POST['id'];
-        $id = $_POST['id'];
+        $id = isset($_POST['name']) ? $_POST['name'] : '';
         $name = isset($_POST['name']) ? $_POST['name'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
         $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
@@ -61,6 +39,25 @@
         deleteRecord($id);
         mysqli_close(connect());
         header('Location: index.php');
+    }
+
+    function updateRecord($userData) {
+        global $table;
+        $id = $userData['id'];
+        $keys = array_keys($userData);
+        $values = array_values($userData);
+        $flds = array();
+        for ($i = 1; $i < count($values); $i++) {
+            $flds[] = "`".$keys[$i]."`='".$values[$i]."'";
+        }
+        $fields = implode(',',$flds);
+        $sql = "UPDATE `".$table."` SET ".$fields." WHERE `id` = ".$id;
+        echo $sql;
+        $conn = connect();
+        $result = mysqli_query($conn,$sql);
+        if($result) {
+            echo "Blood Donor updated...";
+        }
     }
 
     function connect(){
@@ -111,25 +108,6 @@
         $result = mysqli_query($conn,$sql);
         if($result) {
             echo "Blood Donor added...";
-        }
-    }
-
-    function updateRecord($userData) {
-        global $table;
-        $id = $userData[array_keys($userData)[0]];
-        $keys = array_keys($userData);
-        $values = array_values($userData);
-        $flds = array();
-        for ($i = 1; $i < count($values); $i++) {
-            $flds[] = "`".$keys[$i]."`='".$values[$i]."'";
-        }
-        $fields = implode(',',$flds);
-        $sql = "UPDATE `".$table."` SET ".$fields." WHERE `id` = ".$id;
-        echo $sql;
-        $conn = connect();
-        $result = mysqli_query($conn,$sql);
-        if($result) {
-            echo "Blood Donor updated...";
         }
     }
 

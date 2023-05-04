@@ -30,7 +30,7 @@
                         <button name="del-btn" onclick="delete_donor(<?= $user['id'] ?>)">&times;</button>
                         <button name="edit-btn" onclick="update_donor(
                             <?php echo $user['id']; ?>,'<?=$user['name']?>','<?=$user['email']?>','<?=$user['phone']?>','<?=$user['bgroup']?>'
-                        )">&#9998; <?=$user['id']?> <?=$user['name']?> <?=$user['email']?> <?=$user['phone']?> <?=$user['bgroup']?></button>
+                        )">&#9998;</button>
                     </td>
                 </tr>
             <?php endforeach; ?>
